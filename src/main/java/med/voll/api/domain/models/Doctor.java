@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.dtos.DoctorsDTO;
 import med.voll.api.domain.enums.DoctorsExpertiseEnums;
-import org.hibernate.annotations.Type;
 
 @Table(name = "doctors")
 @Entity(name = "Doctor")
@@ -22,6 +21,8 @@ public class Doctor {
 
     private String name;
 
+    private String email;
+
     private String crm;
 
     @Enumerated(EnumType.STRING)
@@ -32,6 +33,7 @@ public class Doctor {
 
     public Doctor(DoctorsDTO dto){
         this.name = dto.name();
+        this.email = dto.email();
         this.crm = dto.crm();
         this.expertise = dto.expertise();
         this.address = new Address(dto.address());

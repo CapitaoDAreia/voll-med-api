@@ -1,6 +1,5 @@
 package med.voll.api.domain.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import med.voll.api.domain.dtos.AddressDTO;
 public class Address {
     private String street;
     private String neighborhood;
-    @JsonProperty(value = "postal_code")
+
     private String postalCode;
     private String city;
     private String uf;
