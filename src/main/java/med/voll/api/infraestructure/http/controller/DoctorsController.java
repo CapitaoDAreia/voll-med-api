@@ -1,14 +1,24 @@
 package med.voll.api.infraestructure.http.controller;
 
+import jakarta.transaction.Transactional;
 import med.voll.api.domain.dtos.DoctorsDTO;
+import med.voll.api.domain.models.Doctor;
+import med.voll.api.domain.repositories.DoctorsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/doctors")
 public class DoctorsController {
+
+    @Autowired
+    DoctorsRepository repository;
+
     @PostMapping
-    public DoctorsDTO create(@RequestBody DoctorsDTO dto) {
-        System.out.println(dto);
-        return dto;
+    @Transactional
+    public void create(@RequestBody DoctorsDTO dto) {
+        Doctor doctor = new Doctor(dto);
+        Doctor result = repository.save(doctor);
+        System.out.println(result);
     }
 }
