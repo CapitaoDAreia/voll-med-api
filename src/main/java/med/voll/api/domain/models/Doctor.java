@@ -1,6 +1,7 @@
 package med.voll.api.domain.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,6 +24,8 @@ public class Doctor {
 
     private String email;
 
+    private String phone;
+
     private String crm;
 
     @Enumerated(EnumType.STRING)
@@ -31,9 +34,10 @@ public class Doctor {
     @Embedded
     private Address address;
 
-    public Doctor(DoctorsDTO dto){
+    public Doctor(@NotNull DoctorsDTO dto){
         this.name = dto.name();
         this.email = dto.email();
+        this.phone = dto.phone();
         this.crm = dto.crm();
         this.expertise = dto.expertise();
         this.address = new Address(dto.address());

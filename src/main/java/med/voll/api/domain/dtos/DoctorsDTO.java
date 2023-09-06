@@ -12,6 +12,8 @@ public record DoctorsDTO(
         @NotBlank
         @Email
         String email,
+        @NotNull
+        String phone,
         @NotBlank
         @Pattern(regexp = "\\d{4,6}")
         String crm,
