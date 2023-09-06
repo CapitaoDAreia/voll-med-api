@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.domain.dtos.CreateDoctorsDTO;
 import med.voll.api.domain.dtos.ListDoctorsDTO;
+import med.voll.api.domain.dtos.UpdateDoctorsDTO;
 import med.voll.api.domain.models.Doctor;
 import med.voll.api.domain.repositories.DoctorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,13 @@ public class DoctorsController {
     @GetMapping
     public Page<ListDoctorsDTO> listDoctors(Pageable pagination) {
         return repository.findAll(pagination).map(ListDoctorsDTO::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public void updateDoctors(@RequestBody @Valid UpdateDoctorsDTO dto){
+        Doctor doctor = repository.getReferenceById(dto.id());
+        doctor.updateInfo(dto);
+        System.out.println(dto);
     }
 }

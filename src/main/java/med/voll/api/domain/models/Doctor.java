@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.dtos.CreateDoctorsDTO;
+import med.voll.api.domain.dtos.UpdateDoctorsDTO;
 import med.voll.api.domain.enums.DoctorsExpertiseEnums;
 
 @Table(name = "doctors")
@@ -34,12 +35,28 @@ public class Doctor {
     @Embedded
     private Address address;
 
-    public Doctor(@NotNull CreateDoctorsDTO dto){
+    public Doctor(@NotNull CreateDoctorsDTO dto) {
         this.name = dto.name();
         this.email = dto.email();
         this.phone = dto.phone();
         this.crm = dto.crm();
         this.expertise = dto.expertise();
         this.address = new Address(dto.address());
+    }
+
+    public void updateInfo(UpdateDoctorsDTO dto) {
+        if (dto != null) {
+            if (dto.name() != null) {
+                this.name = dto.name();
+            }
+
+            if (dto.phone() != null) {
+                this.email = dto.phone();
+            }
+
+            if (dto.address() != null) {
+                this.address.updateInfo(dto.address());
+            }
+        }
     }
 }
