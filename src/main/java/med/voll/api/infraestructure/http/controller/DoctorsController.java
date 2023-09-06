@@ -2,11 +2,16 @@ package med.voll.api.infraestructure.http.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.domain.dtos.DoctorsDTO;
+import med.voll.api.domain.dtos.CreateDoctorsDTO;
+import med.voll.api.domain.dtos.ListDoctorsDTO;
 import med.voll.api.domain.models.Doctor;
 import med.voll.api.domain.repositories.DoctorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/doctors")
@@ -17,9 +22,14 @@ public class DoctorsController {
 
     @PostMapping
     @Transactional
-    public void create(@RequestBody @Valid DoctorsDTO dto) {
+    public void createDoctors(@RequestBody @Valid CreateDoctorsDTO dto) {
         Doctor doctor = new Doctor(dto);
         Doctor result = repository.save(doctor);
         System.out.println(result);
+    }
+
+    @GetMapping
+    public Page<ListDoctorsDTO> listDoctors(Pageable pagination) {
+        return repository.findAll(pagination).map(ListDoctorsDTO::new);
     }
 }

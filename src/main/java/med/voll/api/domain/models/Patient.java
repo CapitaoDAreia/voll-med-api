@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.domain.dtos.PatientsDTO;
+import med.voll.api.domain.dtos.CreatePatientsDTO;
 
 @Table(name = "patients")
 @Entity(name = "Patient")
@@ -30,7 +30,7 @@ public class Patient {
     @Embedded
     private Address address;
 
-    public Patient(@NotNull PatientsDTO dto){
+    public Patient(@NotNull CreatePatientsDTO dto){
         this.name = dto.name();
         this.email = dto.email();
         this.phone = dto.phone();

@@ -2,7 +2,7 @@ package med.voll.api.infraestructure.http.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.domain.dtos.PatientsDTO;
+import med.voll.api.domain.dtos.CreatePatientsDTO;
 import med.voll.api.domain.models.Patient;
 import med.voll.api.domain.repositories.PatientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class PatientsController {
 
     @Transactional
     @PostMapping
-    public void create(@RequestBody @Valid PatientsDTO dto) {
+    public void create(@RequestBody @Valid CreatePatientsDTO dto) {
         Patient patient = new Patient(dto);
         this.repository.save(patient);
         System.out.println(dto);

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import med.voll.api.domain.enums.DoctorsExpertiseEnums;
 
-public record DoctorsDTO(
+public record CreateDoctorsDTO(
         @NotBlank
         String name,
         @NotBlank
