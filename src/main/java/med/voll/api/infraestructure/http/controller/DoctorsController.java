@@ -12,8 +12,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/doctors")
 public class DoctorsController {
@@ -31,14 +29,21 @@ public class DoctorsController {
 
     @GetMapping
     public Page<ListDoctorsDTO> listDoctors(Pageable pagination) {
-        return repository.findAll(pagination).map(ListDoctorsDTO::new);
+        return repository.findAllByActiveTrue(pagination).map(ListDoctorsDTO::new);
     }
 
     @PutMapping
     @Transactional
-    public void updateDoctors(@RequestBody @Valid UpdateDoctorsDTO dto){
+    public void updateDoctors(@RequestBody @Valid UpdateDoctorsDTO dto) {
         Doctor doctor = repository.getReferenceById(dto.id());
         doctor.updateInfo(dto);
         System.out.println(dto);
+    }
+
+    @DeleteMapping(value = "/{ID}")
+    @Transactional
+    public void deleteDoctor(@PathVariable(value = "ID") Long ID) {
+        Doctor doctor = repository.getReferenceById(ID);
+        doctor.setInactive();
     }
 }

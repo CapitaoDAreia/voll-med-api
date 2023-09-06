@@ -35,7 +35,10 @@ public class Doctor {
     @Embedded
     private Address address;
 
+    private Boolean active;
+
     public Doctor(@NotNull CreateDoctorsDTO dto) {
+        this.active = true;
         this.name = dto.name();
         this.email = dto.email();
         this.phone = dto.phone();
@@ -58,5 +61,9 @@ public class Doctor {
                 this.address.updateInfo(dto.address());
             }
         }
+    }
+
+    public void setInactive() {
+        this.active = false;
     }
 }
