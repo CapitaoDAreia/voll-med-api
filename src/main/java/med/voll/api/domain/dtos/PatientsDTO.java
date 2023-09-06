@@ -1,3 +1,19 @@
 package med.voll.api.domain.dtos;
 
-public record PatientsDTO(String name, String email, String phone, String CPF, AddressDTO address) {}
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
+public record PatientsDTO(
+        @NotBlank
+        String name,
+        @NotBlank
+        String email,
+        @NotBlank
+        String phone,
+        @NotBlank
+        @Pattern(regexp = "\\d{11}")
+        String cpf,
+        @NotNull
+        AddressDTO address
+) {}

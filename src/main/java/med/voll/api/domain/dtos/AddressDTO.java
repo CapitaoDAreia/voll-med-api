@@ -15,8 +15,8 @@ public record AddressDTO(
         String city,
         @NotBlank
         String uf,
-        @NotBlank
+
         String number,
-        @NotBlank
+
         String complement
 ) {}
