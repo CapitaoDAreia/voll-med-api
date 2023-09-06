@@ -1,6 +1,7 @@
 package med.voll.api.infraestructure.http.controller;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import med.voll.api.domain.dtos.DoctorsDTO;
 import med.voll.api.domain.models.Doctor;
 import med.voll.api.domain.repositories.DoctorsRepository;
@@ -16,7 +17,7 @@ public class DoctorsController {
 
     @PostMapping
     @Transactional
-    public void create(@RequestBody DoctorsDTO dto) {
+    public void create(@RequestBody @Valid DoctorsDTO dto) {
         Doctor doctor = new Doctor(dto);
         Doctor result = repository.save(doctor);
         System.out.println(result);
