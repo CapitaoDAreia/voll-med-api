@@ -34,6 +34,14 @@ public class PatientsController {
         return ResponseEntity.created(uri).body(createdPatientsDTO);
     }
 
+    @GetMapping(value = "/{ID}")
+    public ResponseEntity<PatientsDTO> getPatient(@PathVariable(value = "ID") Long ID){
+        Patient patient = this.repository.getReferenceById(ID);
+        PatientsDTO dto = new PatientsDTO(patient);
+
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping
     public ResponseEntity<Page<ListPatientsDTO>> listPatients(Pageable pagination){
         Page<ListPatientsDTO> result = repository.findAllByActiveTrue(pagination).map(ListPatientsDTO::new);
