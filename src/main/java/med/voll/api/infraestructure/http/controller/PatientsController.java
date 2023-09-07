@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.domain.dtos.CreatePatientsDTO;
 import med.voll.api.domain.dtos.ListPatientsDTO;
+import med.voll.api.domain.dtos.UpdatePatientsDTO;
 import med.voll.api.domain.models.Patient;
 import med.voll.api.domain.repositories.PatientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,20 @@ public class PatientsController {
 
     @GetMapping
     public Page<ListPatientsDTO> listPatients(Pageable pagination){
-        return repository.findAll(pagination).map(ListPatientsDTO::new);
+        return repository.findAllByActiveTrue(pagination).map(ListPatientsDTO::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public void updatePatients(@RequestBody UpdatePatientsDTO dto){
+        Patient patient = repository.getReferenceById(dto.id());
+        patient.updateInfo(dto);
+    }
+
+    @DeleteMapping(value = "/{ID}")
+    @Transactional
+    public void deletePatients(@PathVariable(value = "ID") Long ID){
+        Patient patient = repository.getReferenceById(ID);
+        patient.setInactive();
     }
 }

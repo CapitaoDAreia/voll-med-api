@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import med.voll.api.domain.dtos.CreatePatientsDTO;
+import med.voll.api.domain.dtos.UpdatePatientsDTO;
 
 @Table(name = "patients")
 @Entity(name = "Patient")
@@ -30,7 +31,10 @@ public class Patient {
     @Embedded
     private Address address;
 
+    private Boolean active;
+
     public Patient(@NotNull CreatePatientsDTO dto){
+        this.active = true;
         this.name = dto.name();
         this.email = dto.email();
         this.phone = dto.phone();
@@ -38,4 +42,21 @@ public class Patient {
         this.address = new Address(dto.address());
     }
 
+    public void updateInfo(UpdatePatientsDTO dto) {
+        if(dto != null){
+            if(dto.name() != null){
+                this.name = dto.name();
+            }
+            if(dto.phone() != null){
+                this.phone = dto.phone();
+            }
+            if(dto.address() != null){
+                this.address.updateInfo(dto.address());
+            }
+        }
+    }
+
+    public void setInactive() {
+        this.active = false;
+    }
 }
