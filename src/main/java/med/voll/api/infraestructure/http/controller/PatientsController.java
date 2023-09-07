@@ -2,9 +2,9 @@ package med.voll.api.infraestructure.http.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.domain.dtos.CreatePatientsDTO;
-import med.voll.api.domain.dtos.ListPatientsDTO;
-import med.voll.api.domain.dtos.UpdatePatientsDTO;
+import med.voll.api.domain.dtos.patients.CreatePatientsDTO;
+import med.voll.api.domain.dtos.patients.ListPatientsDTO;
+import med.voll.api.domain.dtos.patients.UpdatePatientsDTO;
 import med.voll.api.domain.models.Patient;
 import med.voll.api.domain.repositories.PatientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;

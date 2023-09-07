@@ -2,7 +2,7 @@ package med.voll.api.infraestructure.http.controller;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import med.voll.api.domain.dtos.*;
+import med.voll.api.domain.dtos.doctors.*;
 import med.voll.api.domain.models.Doctor;
 import med.voll.api.domain.repositories.DoctorsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +32,14 @@ public class DoctorsController {
         CreatedDoctorsDTO createdDoctorsDTO = new CreatedDoctorsDTO(result);
 
         return ResponseEntity.created(uri).body(createdDoctorsDTO);
+    }
+
+    @GetMapping(value = "/{ID}")
+    public ResponseEntity<DoctorsDTO> getDoctor(@PathVariable(value = "ID") Long ID) {
+        Doctor doctor = repository.getReferenceById(ID);
+        DoctorsDTO dto = new DoctorsDTO(doctor);
+
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping

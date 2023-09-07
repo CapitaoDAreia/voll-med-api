@@ -1,10 +1,10 @@
-package med.voll.api.domain.dtos;
+package med.voll.api.domain.dtos.doctors;
 
 import jakarta.validation.constraints.NotNull;
 import med.voll.api.domain.models.Address;
 import med.voll.api.domain.models.Doctor;
 
-public record CreatedDoctorsDTO(
+public record UpdatedDoctorsDTO(
         @NotNull Long id,
         String name,
         String email,
@@ -13,7 +13,7 @@ public record CreatedDoctorsDTO(
         String expertise,
         Address address
 ) {
-    public CreatedDoctorsDTO(Doctor doctor) {
+    public UpdatedDoctorsDTO(Doctor doctor) {
         this(
                 doctor.getId(),
                 doctor.getName(),
@@ -24,3 +24,4 @@ public record CreatedDoctorsDTO(
                 doctor.getAddress());
     }
 }
+

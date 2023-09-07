@@ -6,8 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.domain.dtos.CreateDoctorsDTO;
-import med.voll.api.domain.dtos.UpdateDoctorsDTO;
+import med.voll.api.domain.dtos.doctors.CreateDoctorsDTO;
+import med.voll.api.domain.dtos.doctors.UpdateDoctorsDTO;
 import med.voll.api.domain.enums.DoctorsExpertiseEnums;
 
 @Table(name = "doctors")
