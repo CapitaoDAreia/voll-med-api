@@ -2,7 +2,7 @@ package med.voll.api.domain.dtos.doctors;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import med.voll.api.domain.models.Doctor;
+import med.voll.api.domain.entities.Doctor;
 
 public record ListDoctorsDTO(
         @NotNull Long id,

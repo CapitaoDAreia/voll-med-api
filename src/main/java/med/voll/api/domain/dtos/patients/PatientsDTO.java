@@ -2,8 +2,8 @@ package med.voll.api.domain.dtos.patients;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import med.voll.api.domain.models.Address;
-import med.voll.api.domain.models.Patient;
+import med.voll.api.domain.entities.Address;
+import med.voll.api.domain.entities.Patient;
 
 public record PatientsDTO(
         @NotNull

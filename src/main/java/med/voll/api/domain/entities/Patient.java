@@ -1,4 +1,4 @@
-package med.voll.api.domain.models;
+package med.voll.api.domain.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -6,17 +6,16 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import med.voll.api.domain.dtos.doctors.CreateDoctorsDTO;
-import med.voll.api.domain.dtos.doctors.UpdateDoctorsDTO;
-import med.voll.api.domain.enums.DoctorsExpertiseEnums;
+import med.voll.api.domain.dtos.patients.CreatePatientsDTO;
+import med.voll.api.domain.dtos.patients.UpdatePatientsDTO;
 
-@Table(name = "doctors")
-@Entity(name = "Doctor")
+@Table(name = "patients")
+@Entity(name = "Patient")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-public class Doctor {
+@EqualsAndHashCode
+public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -27,37 +26,31 @@ public class Doctor {
 
     private String phone;
 
-    private String crm;
-
-    @Enumerated(EnumType.STRING)
-    private DoctorsExpertiseEnums expertise;
+    private String cpf;
 
     @Embedded
     private Address address;
 
     private Boolean active;
 
-    public Doctor(@NotNull CreateDoctorsDTO dto) {
+    public Patient(@NotNull CreatePatientsDTO dto){
         this.active = true;
         this.name = dto.name();
         this.email = dto.email();
         this.phone = dto.phone();
-        this.crm = dto.crm();
-        this.expertise = dto.expertise();
+        this.cpf = dto.cpf();
         this.address = new Address(dto.address());
     }
 
-    public void updateInfo(UpdateDoctorsDTO dto) {
-        if (dto != null) {
-            if (dto.name() != null) {
+    public void updateInfo(UpdatePatientsDTO dto) {
+        if(dto != null){
+            if(dto.name() != null){
                 this.name = dto.name();
             }
-
-            if (dto.phone() != null) {
-                this.email = dto.phone();
+            if(dto.phone() != null){
+                this.phone = dto.phone();
             }
-
-            if (dto.address() != null) {
+            if(dto.address() != null){
                 this.address.updateInfo(dto.address());
             }
         }

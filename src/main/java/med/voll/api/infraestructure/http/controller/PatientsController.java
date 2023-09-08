@@ -3,7 +3,7 @@ package med.voll.api.infraestructure.http.controller;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.domain.dtos.patients.*;
-import med.voll.api.domain.models.Patient;
+import med.voll.api.domain.entities.Patient;
 import med.voll.api.domain.repositories.PatientsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

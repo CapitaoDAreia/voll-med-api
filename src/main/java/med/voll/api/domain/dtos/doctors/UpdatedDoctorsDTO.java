@@ -1,8 +1,8 @@
 package med.voll.api.domain.dtos.doctors;
 
 import jakarta.validation.constraints.NotNull;
-import med.voll.api.domain.models.Address;
-import med.voll.api.domain.models.Doctor;
+import med.voll.api.domain.entities.Address;
+import med.voll.api.domain.entities.Doctor;
 
 public record UpdatedDoctorsDTO(
         @NotNull Long id,
