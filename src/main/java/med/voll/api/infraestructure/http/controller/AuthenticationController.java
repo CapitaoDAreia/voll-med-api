@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import med.voll.api.application.services.TokenServices;
 import med.voll.api.domain.dtos.authentication.AuthenticationDTO;
+import med.voll.api.domain.dtos.authentication.JwtTokenDTO;
 import med.voll.api.domain.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,8 @@ public class AuthenticationController {
         User user = (User) authentication.getPrincipal();
         String token = tokenServices.generateToken(user);
 
-        return ResponseEntity.ok().body(token);
+        JwtTokenDTO jwtDTO = new JwtTokenDTO(token);
+
+        return ResponseEntity.ok().body(jwtDTO);
     }
 }
