@@ -1,9 +1,11 @@
 package med.voll.api.infraestructure.http.handlers;
 
 import jakarta.persistence.EntityNotFoundException;
+import med.voll.api.domain.exceptions.EmptyExpertiseException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +37,18 @@ public class ExceptionsHandler {
         ExceptionDTO dto = new ExceptionDTO(message);
 
         return ResponseEntity.badRequest().body(dto);
+    }
+
+    @ExceptionHandler(EmptyExpertiseException.class)
+    public ResponseEntity<?> handleEmptyExpertiseException(EmptyExpertiseException ex){
+        String message = ex.getMessage();
+        return ResponseEntity.badRequest().body(message);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex){
+        String message = ex.getMessage();
+        return ResponseEntity.badRequest().body(message);
     }
 
     private record NotValidExceptionDTO(String field, String message){

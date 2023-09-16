@@ -4,5 +4,5 @@ public enum DoctorsExpertiseEnums {
     ORTOPEDIA,
     CARDIOLOGIA,
     GINECOLOGIA,
-    DERMATOLOGIA
+    DERMATOLOGIA,
 }
