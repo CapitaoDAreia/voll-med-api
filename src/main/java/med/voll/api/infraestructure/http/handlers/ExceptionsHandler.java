@@ -2,6 +2,7 @@ package med.voll.api.infraestructure.http.handlers;
 
 import jakarta.persistence.EntityNotFoundException;
 import med.voll.api.domain.exceptions.EmptyExpertiseException;
+import med.voll.api.domain.exceptions.UnableToCancelAppointmentException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +50,18 @@ public class ExceptionsHandler {
     public ResponseEntity<?> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex){
         String message = ex.getMessage();
         return ResponseEntity.badRequest().body(message);
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<?> handleIllegalArgumentException(IllegalArgumentException ex){
+        String message = ex.getMessage();
+        return ResponseEntity.badRequest().body(message);
+    }
+
+    @ExceptionHandler(UnableToCancelAppointmentException.class)
+    public ResponseEntity<?> handleUnableToCancelAppointmentException(UnableToCancelAppointmentException ex){
+        String message = ex.getMessage();
+        return ResponseEntity.unprocessableEntity().body(message);
     }
 
     private record NotValidExceptionDTO(String field, String message){

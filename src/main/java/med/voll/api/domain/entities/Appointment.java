@@ -28,4 +28,10 @@ public class Appointment {
     private Patient patient;
 
     private LocalDateTime date;
+
+    private Boolean active;
+
+    public void setInactive() {
+        this.active = false;
+    }
 }
