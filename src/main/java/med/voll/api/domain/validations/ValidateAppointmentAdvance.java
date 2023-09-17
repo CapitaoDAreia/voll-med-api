@@ -2,13 +2,16 @@ package med.voll.api.domain.validations;
 
 import med.voll.api.domain.dtos.appointments.ScheduleAppointmentsDTO;
 import med.voll.api.domain.exceptions.UnableToScheduleAppointmentException;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class ValidateAppointmentAdvance {
+@Component
+public class ValidateAppointmentAdvance implements ValidateBusinessRulesInterface{
 
-    public void isAppointmentAdvanceHourValid(ScheduleAppointmentsDTO dto) {
+    @Override
+    public void validate(ScheduleAppointmentsDTO dto) {
         var appointmentDate = dto.date();
         var now = LocalDateTime.now();
 

@@ -2,12 +2,14 @@ package med.voll.api.domain.validations;
 
 import med.voll.api.domain.dtos.appointments.ScheduleAppointmentsDTO;
 import med.voll.api.domain.exceptions.UnableToScheduleAppointmentException;
+import org.springframework.stereotype.Component;
 
 import java.time.DayOfWeek;
 
-public class ValidateOpeningHours {
-
-    public void isInsideOpeningHour(ScheduleAppointmentsDTO dto) {
+@Component
+public class ValidateOpeningHours implements ValidateBusinessRulesInterface{
+    @Override
+    public void validate(ScheduleAppointmentsDTO dto) {
         var appointmentDate = dto.date();
 
         var isSunday = appointmentDate.getDayOfWeek().equals(DayOfWeek.SUNDAY);

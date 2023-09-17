@@ -1,8 +1,10 @@
 package med.voll.api.infraestructure.http.handlers;
 
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.persistence.EntityNotFoundException;
 import med.voll.api.domain.exceptions.EmptyExpertiseException;
 import med.voll.api.domain.exceptions.UnableToCancelAppointmentException;
+import med.voll.api.domain.exceptions.UnableToScheduleAppointmentException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +62,12 @@ public class ExceptionsHandler {
 
     @ExceptionHandler(UnableToCancelAppointmentException.class)
     public ResponseEntity<?> handleUnableToCancelAppointmentException(UnableToCancelAppointmentException ex){
+        String message = ex.getMessage();
+        return ResponseEntity.unprocessableEntity().body(message);
+    }
+
+    @ExceptionHandler(UnableToScheduleAppointmentException.class)
+    public ResponseEntity<?> handleUnableToScheduleAppointmentException(UnableToScheduleAppointmentException ex){
         String message = ex.getMessage();
         return ResponseEntity.unprocessableEntity().body(message);
     }

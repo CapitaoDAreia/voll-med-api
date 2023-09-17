@@ -5,6 +5,7 @@ import jakarta.validation.Valid;
 import med.voll.api.application.services.AppointmentServices;
 import med.voll.api.domain.dtos.appointments.CancelAppointmentDTO;
 import med.voll.api.domain.dtos.appointments.ScheduleAppointmentsDTO;
+import med.voll.api.domain.dtos.appointments.ScheduledAppointmentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,13 @@ public class AppointmentsController {
 
     @PostMapping
     public ResponseEntity<?> toSchedule(@RequestBody @Valid ScheduleAppointmentsDTO scheduleAppointmentsDTO) {
-        appointmentServices.toSchedule(scheduleAppointmentsDTO);
-        return ResponseEntity.ok().build();
+        ScheduledAppointmentDTO scheduledAppointmentDTO = appointmentServices.toSchedule(scheduleAppointmentsDTO);
+        return ResponseEntity.ok(scheduledAppointmentDTO);
     }
 
     @DeleteMapping
     @Transactional
-    public ResponseEntity<?> toCancel(@RequestBody @Valid CancelAppointmentDTO cancelAppointmentDTO){
+    public ResponseEntity<?> toCancel(@RequestBody @Valid CancelAppointmentDTO cancelAppointmentDTO) {
         appointmentServices.toCancel(cancelAppointmentDTO);
         return ResponseEntity.noContent().build();
     }

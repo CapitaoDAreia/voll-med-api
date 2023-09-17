@@ -3,12 +3,16 @@ package med.voll.api.domain.validations;
 import med.voll.api.domain.dtos.appointments.ScheduleAppointmentsDTO;
 import med.voll.api.domain.exceptions.UnableToScheduleAppointmentException;
 import med.voll.api.domain.repositories.PatientsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class ValidateIfPatientIsActive {
-
+@Component
+public class ValidateIfPatientIsActive implements ValidateBusinessRulesInterface{
+    @Autowired
     PatientsRepository patientsRepository;
 
-    public void isPatientActive(ScheduleAppointmentsDTO dto){
+    @Override
+    public void validate(ScheduleAppointmentsDTO dto){
         var patientId = dto.idPatient();
 
         if(patientId == null) throw new UnableToScheduleAppointmentException("Patient id is required");
