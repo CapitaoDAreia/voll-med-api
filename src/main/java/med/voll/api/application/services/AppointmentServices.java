@@ -12,7 +12,7 @@ import med.voll.api.domain.exceptions.UnableToCancelAppointmentException;
 import med.voll.api.domain.repositories.AppointmentsRepository;
 import med.voll.api.domain.repositories.DoctorsRepository;
 import med.voll.api.domain.repositories.PatientsRepository;
-import med.voll.api.domain.validations.ValidateBusinessRulesInterface;
+import med.voll.api.domain.validations.scheduleAppointments.ValidateBusinessRulesInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
