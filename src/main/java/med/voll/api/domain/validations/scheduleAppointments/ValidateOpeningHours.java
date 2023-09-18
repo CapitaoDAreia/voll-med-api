@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.time.DayOfWeek;
 
 @Component
-public class ValidateOpeningHours implements ValidateBusinessRulesInterface{
+public class ValidateOpeningHours implements ValidateScheduleAppointmentsBusinessRulesInterface {
     @Override
     public void validate(ScheduleAppointmentsDTO dto) {
         var appointmentDate = dto.date();

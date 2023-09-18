@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ValidateIfPatientAlreadyHasAnAppointmentInThatDay implements ValidateBusinessRulesInterface{
+public class ValidateIfPatientAlreadyHasAnAppointmentInThatDay implements ValidateScheduleAppointmentsBusinessRulesInterface {
     @Autowired
     private AppointmentsRepository appointmentsRepository;
 

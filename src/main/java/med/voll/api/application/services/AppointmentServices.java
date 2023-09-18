@@ -8,16 +8,14 @@ import med.voll.api.domain.entities.Appointment;
 import med.voll.api.domain.entities.Doctor;
 import med.voll.api.domain.entities.Patient;
 import med.voll.api.domain.exceptions.EmptyExpertiseException;
-import med.voll.api.domain.exceptions.UnableToCancelAppointmentException;
 import med.voll.api.domain.repositories.AppointmentsRepository;
 import med.voll.api.domain.repositories.DoctorsRepository;
 import med.voll.api.domain.repositories.PatientsRepository;
-import med.voll.api.domain.validations.scheduleAppointments.ValidateBusinessRulesInterface;
+import med.voll.api.domain.validations.cancelAppointments.ValidateCancelAppointmentsBusinessRulesInterface;
+import med.voll.api.domain.validations.scheduleAppointments.ValidateScheduleAppointmentsBusinessRulesInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -33,7 +31,10 @@ public class AppointmentServices {
     private PatientsRepository patientsRepository;
 
     @Autowired
-    private List<ValidateBusinessRulesInterface> validators;
+    private List<ValidateScheduleAppointmentsBusinessRulesInterface> scheduleAppointmentsValidators;
+    @Autowired
+    private List<ValidateCancelAppointmentsBusinessRulesInterface> cancelAppointmentsValidators;
+
 
     public ScheduledAppointmentDTO toSchedule(ScheduleAppointmentsDTO dto) {
         if (!patientsRepository.existsById(dto.idPatient())) {
@@ -44,7 +45,7 @@ public class AppointmentServices {
             throw new EntityNotFoundException("Doctor id not found");
         }
 
-        validators.forEach(rule -> rule.validate(dto));
+        scheduleAppointmentsValidators.forEach(rule -> rule.validate(dto));
 
         Patient patient = patientsRepository.getReferenceById(dto.idPatient());
 
@@ -61,21 +62,15 @@ public class AppointmentServices {
         return new ScheduledAppointmentDTO(appointment);
     }
 
-    public void toCancel(CancelAppointmentDTO cancelAppointmentDTO) {
-        if (cancelAppointmentDTO.appointment().getId() == null) {
+    public void toCancel(CancelAppointmentDTO dto) {
+        if (dto.appointment().getId() == null) {
             throw new IllegalArgumentException("Cannot cancel an appointment without appointment ID");
         }
 
-        var spanBetweenNowAndAppointmentDate = calculateSpanBetweenNowAndAppointmentDate(cancelAppointmentDTO);
-
-        if (spanBetweenNowAndAppointmentDate < 24) {
-            throw new UnableToCancelAppointmentException(
-                    "Cannot cancel an appointment less than 24 hours in advance "
-            );
-        }
+        cancelAppointmentsValidators.forEach(rule -> rule.validate(dto));
 
         Appointment appointment = appointmentsRepository
-                .getReferenceById(cancelAppointmentDTO.appointment().getId());
+                .getReferenceById(dto.appointment().getId());
 
         appointment.setInactive();
     }
@@ -90,12 +85,5 @@ public class AppointmentServices {
         }
 
         return doctorsRepository.chooseRandomActiveAndAvailableDoctor(dto.expertise(), dto.date());
-    }
-
-    private Long calculateSpanBetweenNowAndAppointmentDate(CancelAppointmentDTO cancelAppointmentDTO) {
-        var now = LocalDateTime.now();
-        var appointmentDate = cancelAppointmentDTO.appointment().getDate();
-
-        return Duration.between(now, appointmentDate).toHours();
     }
 }

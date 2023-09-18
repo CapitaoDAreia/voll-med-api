@@ -8,7 +8,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 @Component
-public class ValidateAppointmentAdvance implements ValidateBusinessRulesInterface{
+public class ValidateAppointmentAdvance implements ValidateScheduleAppointmentsBusinessRulesInterface {
 
     @Override
     public void validate(ScheduleAppointmentsDTO dto) {
