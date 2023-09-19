@@ -29,6 +29,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //defines session management type
                 .and().authorizeHttpRequests() //allows http request to be done
                 .requestMatchers(HttpMethod.POST, "/api/v1/auth").permitAll() //defines which request are allowed
+                .requestMatchers(HttpMethod.GET, "/v3/api-docs/**","/swagger-ui.html", "swagger-ui/**").permitAll() //defines which request are allowed
                 .anyRequest().authenticated() //defines that all requests, except allowed previously, are permitted only when authenticated
                 .and().addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) //defines that our custom filter comes before Spring filter
                 .build(); //build the config
