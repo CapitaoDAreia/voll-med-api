@@ -1,5 +1,6 @@
 package med.voll.api.infraestructure.http.controller;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import med.voll.api.application.services.AppointmentServices;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/v1/appointments")
+@SecurityRequirement(name = "bearer-key")
 public class AppointmentsController {
 
     @Autowired
