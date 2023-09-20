@@ -36,17 +36,57 @@ class DoctorsRepositoryTest {
     @Test
     @DisplayName("Should return null when registered doctor is unavailable in this date")
     void chooseRandomActiveAndAvailableDoctorScenario1() {
+        //giver / arrange - given this information
+        var nextMonday10Am = LocalDate.now()
+                .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
+                .atTime(10, 0);
+
+        var doctor = registerDoctor("doctor", "doctor@doctor.med", "123456", DoctorsExpertiseEnums.CARDIOLOGIA);
+        var patient = registerPatient("Patient", "patient@email.com", "00000000000");
+        registerAppointment(doctor, patient, nextMonday10Am);
+
+        //when / act - when I call this method
+        var freeDoctor = doctorsRepository.chooseRandomActiveAndAvailableDoctor(DoctorsExpertiseEnums.CARDIOLOGIA, nextMonday10Am);
+
+        //then / assert - I'll give this result
+        Assertions.assertThat(freeDoctor).isNull();
+    }
+
+    @Test
+    @DisplayName("Should return doctor when he is available on date")
+    void chooseRandomActiveAndAvailableDoctorScenario2() {
 
         var nextMonday10Am = LocalDate.now()
                 .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
                 .atTime(10, 0);
 
+        var doctor = registerDoctor("doctor", "doctor@doctor.med", "123456", DoctorsExpertiseEnums.CARDIOLOGIA);
 
         var freeDoctor = doctorsRepository.chooseRandomActiveAndAvailableDoctor(DoctorsExpertiseEnums.CARDIOLOGIA, nextMonday10Am);
 
-        Assertions.assertThat(freeDoctor).isNull();
+        Assertions.assertThat(freeDoctor).isEqualTo(doctor);
     }
 
+    @Test
+    @DisplayName("Should return null when doctor is inactive")
+    void chooseRandomActiveAndAvailableDoctorScenario3() {
+        var nextMonday10Am = LocalDate.now()
+                .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
+                .atTime(10, 0);
+
+        var nextMonday12Pm = LocalDate.now()
+                .with(TemporalAdjusters.next(DayOfWeek.MONDAY))
+                .atTime(12, 0);
+
+        var doctor = registerDoctor("doctor", "doctor@doctor.med", "123456", DoctorsExpertiseEnums.CARDIOLOGIA);
+        var patient = registerPatient("Patient", "patient@email.com", "00000000000");
+        registerAppointment(doctor, patient, nextMonday10Am);
+        doctor.setInactive();
+
+        var freeDoctor = doctorsRepository.chooseRandomActiveAndAvailableDoctor(DoctorsExpertiseEnums.CARDIOLOGIA, nextMonday12Pm);
+
+        Assertions.assertThat(freeDoctor).isNull();
+    }
 
 
     private void registerAppointment(Doctor doctor, Patient patient, LocalDateTime date) {
